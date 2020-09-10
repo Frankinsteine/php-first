@@ -80,7 +80,7 @@ function cube($x1 = 0, $x2 = 0, $x3 = 0, $x4 = 0) {
 
                 if ($Q > 0) {
                     $fi = 1 / 3 * acosh(abs($R) / (pow($Q, 3 / 2)));
-                    $Re = sgn(settype($R, "integer")) * pow($Q, 1 / 2) * cosh($fi) - $a / 3;
+                    $Re = sgn($R) * pow(abs($Q), 1 / 2) * cosh($fi) - $a / 3;
                     $Im = pow(3, 1 / 2) * pow($Q, 1 / 2) * sinh($fi);
 
                     $x1 = (-2) * ($Re + $a/3) - $a/3;
@@ -92,12 +92,12 @@ function cube($x1 = 0, $x2 = 0, $x3 = 0, $x4 = 0) {
                     ];
                 }
 
-                elseif ($Q < 0) {
+                if ($Q < 0) {
                     $fi = 1 / 3 * asinh(abs($R) / (pow(abs($Q), 3 / 2)));
-                    $Re = sgn(settype($R, "integer")) * pow(abs($Q), 1 / 2) * sinh($fi) - $a / 3;
+                    $Re = sgn($R) * pow(abs($Q), 1 / 2) * sinh($fi) - $a / 3;
                     $Im = pow(3, 1 / 2) * pow(abs($Q), 1 / 2) * cosh($fi);
 
-                    $x1 = (-2) * $Re;
+                    $x1 = (-2) * ($Re + $a/3) - $a/3;
 
                     return [
                         "x1" => ("$x1 <br/>"),
@@ -106,7 +106,7 @@ function cube($x1 = 0, $x2 = 0, $x3 = 0, $x4 = 0) {
                     ];
                 }
 
-                elseif ($Q === 0) {
+                if ($Q === 0) {
                     $x1 = (-1) * pow(($c - ($a * $a * $a / 27)), 1 / 3) - $a / 3;
                     $Re = (-1) * ($a + $x1) / 2;
                     $Im = 1 / 2 * pow(abs(($a - 3 * $x1) * ($a + $x1) - 4 * $b), 1 / 2);
